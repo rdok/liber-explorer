@@ -3,7 +3,15 @@ version: "3"
 services:
   node:
     image: node:13.8-alpine3.11
-    command: tail -f /dev/null
     working_dir: /app
     volumes:
     - .:/app
+
+  live-server:
+    image: node:13.8-alpine3.11
+    command: yarn dev
+    ports:
+    - 8080:8080
+    working_dir: /app
+    volumes:
+      - .:/app

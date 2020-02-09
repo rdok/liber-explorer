@@ -6,8 +6,9 @@
 ### Quickstart
 
 ```
-docker-compose up -d
 source aliases.sh
 yarn
-yarn run compile
+docker-compose up -d
+
+http://127.0.0.1:8080/
 ```
