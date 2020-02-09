@@ -8,7 +8,6 @@
 ```
 docker-compose up -d
 source aliases.sh
-
-node --version
-yarn --version
+yarn
+yarn run compile
 ```

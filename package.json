@@ -1,5 +1,9 @@
 {
+  "scripts": {
+    "compile": "node-sass src/styles/styles.scss public/style.css"
+  },
   "dependencies": {
     "node-sass": "^4.13.1"
-  }
+  },
+  "license": "MIT"
 }

@@ -17,6 +17,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
+      - name: Compile
+        run: |
+          docker-compose up -d
+          docker-compose exec -T node yarn
+          docker-compose exec -T node yarn run compile
       - name: Sync with S3
         run: aws s3 sync ./public s3://training-apps-rdok/liber-explorer --delete
       - name: Create CloudFront invalidation
