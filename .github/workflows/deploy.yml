@@ -19,8 +19,9 @@ jobs:
       - uses: actions/checkout@v1
       - name: Compile
         run: |
-          docker-compose run --rm -u "${UID}" -T node yarn
-          docker-compose run --rm -u "${UID}" -T node yarn compile
+          source aliases.sh
+          yarn
+          yarn compile
       - name: Sync with S3
         run: aws s3 sync ./public s3://training-apps-rdok/liber-explorer --delete
       - name: Create CloudFront invalidation
