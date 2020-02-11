@@ -1,11 +1,6 @@
 version: "3"
 
 services:
-  node:
-    image: node:13.8-alpine3.11
-    working_dir: /app
-    volumes:
-    - .:/app
 
   live-server:
     image: node:13.8-alpine3.11

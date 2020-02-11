@@ -1,7 +1,8 @@
 function node() {
-  docker-compose run --rm -u "${UID}" node "$@"
+  docker run --rm --user "${UID}" --workdir /app --volume "$PWD:/app" \
+    node:13.8-alpine3.11 "$@"
 }
 
 function yarn() {
-  docker-compose run --rm -u "${UID}" node yarn "$@"
+  node yarn "$@"
 }
