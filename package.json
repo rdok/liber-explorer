@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "compile": "node-sass src/styles/styles.scss public/style.css",
+    "compile": "node-sass src/styles/styles.scss public/styles/style.css",
     "compile-watch": "yarn compile -w",
     "dev": "yarn compile-watch & yarn live-server --no-browser public"
   },
