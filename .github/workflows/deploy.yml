@@ -15,8 +15,8 @@ on:
         default: production
 jobs:
   deliver:
-    env:
-      STACK_NAME: ${{ format('rdok-{0}-{1}', ${{ env.INPUTS_ENVIRONMENT}}, ${{ env.NAME }}) }}
+    #env:
+     # STACK_NAME: ${{ format('rdok-{0}-{1}', ${{ env.INPUTS_ENVIRONMENT}}, ${{ env.NAME }}) }}
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
@@ -24,7 +24,7 @@ jobs:
         run: |
           printenv
         env:
-          STACK_NAME: ${{ format('rdok-{0}-{1}', ${{ env.INPUTS_ENVIRONMENT}}, ${{ env.NAME }}) }}
+          STACK_NAME: ${{ format('rdok-{0}-{1}', env.INPUTS_ENVIRONMENT, env.NAME) }}
           DEPLOY_BUCKET: 'rdok-${{ env.INPUTS_ENVIRONMENT}}-deployments-us-east-1'
           DOMAIN: '${{ env.INPUTS_ENVIRONMENT }}-${{ env.NAME }}.rdok.co.uk'
 #          sam package \
