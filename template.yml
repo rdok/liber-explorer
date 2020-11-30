@@ -76,12 +76,12 @@ Resources:
 #            Resource: !Sub "${Website.Arn}/*"
 #            Principal: '*'
 #
-#Outputs:
+Outputs:
 #  WebsiteURL:
 #    Value: !Sub "https://${DomainName}"
-#  WebsiteBucket:
-#    Description: Contains static assets of website.
-#    Value: !Ref Website
+  WebsiteBucket:
+    Description: Contains static assets of website.
+    Value: !Ref Website
 #  BucketARN:
 #    Value: !GetAtt Website.Arn
 #  DistributionID:

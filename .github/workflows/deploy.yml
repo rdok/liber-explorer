@@ -41,14 +41,14 @@ jobs:
           DOMAIN: ${{ format('{0}-{1}.{2}', env.INPUTS_ENVIRONMENT, env.NAME, env.BASE_DOMAIN) }}
       - name: Website Bucket Sync
         run: |
+          docker run --rm -u "$(id -u)" -w "/app" -v "${PWD}:/app" \
+            node:13.8-alpine3.11 sh -c 'yarn && yarn compile'
           BUCKET_NAME=$( \
             aws cloudformation describe-stacks  \
               --stack-name "$STACK_NAME" \
               --query 'Stacks[0].Outputs[?OutputKey==`WebsiteBucket`].OutputValue' \
               --output text \
           )
-          docker run --rm -u "$(id -u)" -w "/app" -v "${PWD}:/app" \
-            node:13.8-alpine3.11 sh -c 'yarn && yarn compile'
           aws s3 sync ./public s3://${BUCKET_NAME} --delete
         env:
           STACK_NAME: ${{ format('rdok-{0}-{1}', env.INPUTS_ENVIRONMENT, env.NAME) }}
