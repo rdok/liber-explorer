@@ -15,16 +15,17 @@ on:
         default: production
 jobs:
   deliver:
-    env:
-      STACK_NAME: format('rdok-{0}-{1}', 'test', 'beta')  
-      DEPLOY_BUCKET: 'rdok-${{ env.INPUTS_ENVIRONMENT}}-deployments-us-east-1'
-      DOMAIN: '${{ env.INPUTS_ENVIRONMENT }}-${{ env.NAME }}.rdok.co.uk'
+
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - name: CloudFormation Package & Deploy
         run: |
           printenv
+        env:
+          STACK_NAME: format('rdok-{0}-{1}', 'test', 'beta')  
+          DEPLOY_BUCKET: 'rdok-${{ env.INPUTS_ENVIRONMENT}}-deployments-us-east-1'
+          DOMAIN: '${{ env.INPUTS_ENVIRONMENT }}-${{ env.NAME }}.rdok.co.uk'
 #          sam package \
 #            --output-template-file packaged-template.yml \
 #            --s3-prefix "${STACK_NAME}/packages" \
