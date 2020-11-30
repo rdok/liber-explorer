@@ -7,14 +7,14 @@ Parameters:
   Route53HostedZoneId:
     Type: String
 Resources:
-  Certificate:
-    Type: AWS::CertificateManager::Certificate
-    Properties:
-      ValidationMethod: DNS
-      DomainValidationOptions:
-        - DomainName: !Ref DomainName
-          HostedZoneId: !Ref Route53HostedZoneId
-      DomainName: !Ref DomainName
+#  Certificate:
+#    Type: AWS::CertificateManager::Certificate
+#    Properties:
+#      ValidationMethod: DNS
+#      DomainValidationOptions:
+#        - DomainName: !Ref DomainName
+#          HostedZoneId: !Ref Route53HostedZoneId
+#      DomainName: !Ref DomainName
   Domain:
     Type: AWS::Route53::RecordSet
     Properties:
@@ -47,10 +47,10 @@ Resources:
               - "${Input}_target_origin_id"
               - { Input: !Ref DomainName }
         Enabled: true
-        ViewerCertificate:
+#        ViewerCertificate:
 #          AcmCertificateArn: !Ref Certificate
-          MinimumProtocolVersion: TLSv1
-          SslSupportMethod: sni-only
+#          MinimumProtocolVersion: TLSv1
+#          SslSupportMethod: sni-only
 
   CDNIdentity:
     Type: 'AWS::CloudFront::CloudFrontOriginAccessIdentity'
