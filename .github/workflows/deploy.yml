@@ -26,6 +26,7 @@ jobs:
             --s3-prefix "${STACK_NAME}/packages" \
             --s3-bucket "${DEPLOY_BUCKET}"
           sam deploy \
+            --no-fail-on-empty-changeset \
             --s3-bucket "$DEPLOY_BUCKET" \
             --s3-prefix "${STACK_NAME}/deployments" \
             --template-file packaged-template.yml \
