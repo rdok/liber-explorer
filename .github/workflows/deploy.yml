@@ -16,7 +16,7 @@ on:
 jobs:
   deliver:
     env:
-      STACK_NAME: 'rdok-${{ env.INPUTS_ENVIRONMENT }}-${{ env.NAME }}'
+      STACK_NAME: "rdok-${{ env.INPUTS_ENVIRONMENT }}-${{ env.NAME }}"
       DEPLOY_BUCKET: 'rdok-${{ env.INPUTS_ENVIRONMENT}}-deployments-us-east-1'
       DOMAIN: '${{ env.INPUTS_ENVIRONMENT }}-${{ env.NAME }}.rdok.co.uk'
     runs-on: ubuntu-20.04
