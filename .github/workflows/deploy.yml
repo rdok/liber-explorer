@@ -1,8 +1,4 @@
 name: Deploy
-description: Builds & deploys testing and production environments.
-inputs:
-  environment:
-    required: false
 env:
   AWS_DEFAULT_REGION: us-east-1
   AWS_ACCESS_KEY_ID: AKIAVEPBBWCCUDJORPG3
@@ -11,13 +7,13 @@ env:
   DEPLOY_BUCKET: rdok-${{ env.INPUTS_ENVIRONMENT}}-deployments-us-east-1
   DOMAIN: ${{ env.INPUTS_ENVIRONMENT }}-${{ env.NAME }}.rdok.co.uk
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  INPUTS_ENVIRONMENT: testing
 on:
-  pull_request:
-    environment: ${{ env.GITHUB_REF }}
+  pull_request: 
   push:
-    environment: testing
   workflow_dispatch:
-    environment: production
+    inputs:
+      environment: production
 jobs:
   deliver:
     runs-on: ubuntu-20.04
