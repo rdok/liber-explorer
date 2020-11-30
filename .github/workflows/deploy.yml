@@ -9,11 +9,13 @@ env:
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   INPUTS_ENVIRONMENT: testing
 on:
-  pull_request: 
+  # pull_request: 
   push:
   workflow_dispatch:
     inputs:
-      environment: production
+      environment: 
+        required: true
+        default: production
 jobs:
   deliver:
     runs-on: ubuntu-20.04
