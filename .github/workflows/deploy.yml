@@ -46,6 +46,7 @@ jobs:
               --query 'Stacks[0].Outputs[?OutputKey==`WebsiteBucket`].OutputValue' \
               --output text \
           )
+          make compile
           aws s3 sync ./public s3://${BUCKET_NAME} --delete
         env:
           STACK_NAME: ${{ format('rdok-{0}-{1}', env.INPUTS_ENVIRONMENT, env.NAME) }}
