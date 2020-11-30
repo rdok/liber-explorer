@@ -23,8 +23,9 @@ jobs:
         run: |
           printenv
         env:
+          STACK_NAME_V2: rdok-${{ env.INPUTS-ENVIRONMENT }}-${{ env.NAME) }}
           STACK_NAME: ${{ format('rdok-{0}-{1}', env.INPUTS_ENVIRONMENT, env.NAME) }}
-          DEPLOY_BUCKET: ${{ format('{0}-{1}', env.INPUTS_ENVIRONMENT, env.NAME) }}
+          DEPLOY_BUCKET: ${{ format('rdok-{0}-deployments-us-east-1', env.INPUTS_ENVIRONMENT) }}
           DOMAIN: ${{ format('{0}-{1}.{2}', env.INPUTS_ENVIRONMENT, env.NAME, env.BASE_DOMAIN) }}
 #          sam package \
 #            --output-template-file packaged-template.yml \
