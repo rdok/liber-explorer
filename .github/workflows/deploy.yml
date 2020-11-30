@@ -3,9 +3,6 @@ env:
   AWS_DEFAULT_REGION: us-east-1
   AWS_ACCESS_KEY_ID: AKIAVEPBBWCCUDJORPG3
   NAME: liber-explorer
-  STACK_NAME: rdok-${{ env.INPUTS_ENVIRONMENT }}-${{ env.NAME }}
-  DEPLOY_BUCKET: rdok-${{ env.INPUTS_ENVIRONMENT}}-deployments-us-east-1
-  DOMAIN: ${{ env.INPUTS_ENVIRONMENT }}-${{ env.NAME }}.rdok.co.uk
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   INPUTS_ENVIRONMENT: testing
 on:
@@ -18,6 +15,10 @@ on:
         default: production
 jobs:
   deliver:
+    env:
+      STACK_NAME: rdok-${{ env.INPUTS_ENVIRONMENT }}-${{ env.NAME }}
+      DEPLOY_BUCKET: rdok-${{ env.INPUTS_ENVIRONMENT}}-deployments-us-east-1
+      DOMAIN: ${{ env.INPUTS_ENVIRONMENT }}-${{ env.NAME }}.rdok.co.uk
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
