@@ -2,13 +2,10 @@
 
 ![Deployment](https://github.com/rdok/liber-explorer/workflows/CI/badge.svg) 
 
-
 ### Quickstart
 
-```
-source aliases.sh
-yarn
-docker-compose up -d
+> Requires docker
 
-http://127.0.0.1:8080/
-```
+`make` 
+
+See `Makefile` for more
