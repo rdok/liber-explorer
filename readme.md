@@ -1,6 +1,6 @@
 # Liber Explorer
 
-![Deployment](https://github.com/rdok/liber-explorer/workflows/CI/badge.svg) 
+![Deploy](https://github.com/rdok/liber-explorer/workflows/Deploy/badge.svg)
 
 ### Quickstart
 
