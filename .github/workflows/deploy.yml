@@ -46,7 +46,8 @@ jobs:
               --query 'Stacks[0].Outputs[?OutputKey==`WebsiteBucket`].OutputValue' \
               --output text \
           )
-          make compile
+          docker run --rm -u "$(id -u)" -w "/app" -v "${PWD}:/app" \
+            node:13.8-alpine3.11 sh -c 'yarn && yarn compile'
           aws s3 sync ./public s3://${BUCKET_NAME} --delete
         env:
           STACK_NAME: ${{ format('rdok-{0}-{1}', env.INPUTS_ENVIRONMENT, env.NAME) }}
