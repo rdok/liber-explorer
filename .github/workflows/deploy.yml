@@ -5,6 +5,7 @@ env:
   NAME: liber-explorer
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   INPUTS_ENVIRONMENT: testing
+  BASE_DOMAIN: rdok.co.uk
 on:
   # pull_request: 
   push:
@@ -14,9 +15,7 @@ on:
         required: true
         default: production
 jobs:
-  deliver:
-    env:
-      STACK_NAME: ${{ format('rdok-{0}-{1}', env.INPUTS_ENVIRONMENT, env.NAME) }}
+  package-deploy:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
@@ -25,8 +24,8 @@ jobs:
           printenv
         env:
           STACK_NAME: ${{ format('rdok-{0}-{1}', env.INPUTS_ENVIRONMENT, env.NAME) }}
-          DEPLOY_BUCKET: 'rdok-${{ env.INPUTS_ENVIRONMENT}}-deployments-us-east-1'
-          DOMAIN: '${{ env.INPUTS_ENVIRONMENT }}-${{ env.NAME }}.rdok.co.uk'
+          DEPLOY_BUCKET: ${{ format('{0}-{1}', env.INPUTS_ENVIRONMENT, env.NAME) }}
+          DOMAIN: ${{ format('{0}-{1}.{2}', env.INPUTS_ENVIRONMENT, env.NAME, env.BASE_DOMAIN) }}
 #          sam package \
 #            --output-template-file packaged-template.yml \
 #            --s3-prefix "${STACK_NAME}/packages" \
