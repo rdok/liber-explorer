@@ -8,60 +8,69 @@ env:
   BASE_DOMAIN: rdok.co.uk
 on:
   # pull_request:
-  push:
+#  push:
   workflow_dispatch:
     inputs:
       environment:
         required: true
-        default: production
+        default: ''
 jobs:
   package-deploy:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
+      - id: envs
+        run: |
+          printenv
+#          domain-prefix === master ? '' : 'testing-'
+#          DOMAIN=domain-prefix + basedomain
+#          echo ::set-output name=domain::${DOMAIN}
+#
+#          STACK_NAME: ${{ format('rdok-{0}-{1}', env.INPUTS_ENVIRONMENT, env.NAME) }}
+#          echo ::set-output name=stack-name::${STACK_NAME}
+
+          STACK_NAME='stack-name'
+          echo ::set-output name=stack-name::${STACK_NAME}
       - name: CloudFormation Package & Deploy
         run: |
-          sam package \
-            --output-template-file packaged-template.yml \
-            --s3-prefix "${STACK_NAME}/packages" \
-            --s3-bucket "${DEPLOY_BUCKET}"
-          sam deploy \
-            --no-fail-on-empty-changeset \
-            --s3-bucket "$DEPLOY_BUCKET" \
-            --s3-prefix "${STACK_NAME}/deployments" \
-            --template-file packaged-template.yml \
-            --stack-name "$STACK_NAME" \
-            --capabilities CAPABILITY_IAM \
-            --parameter-overrides \
-              Route53HostedZoneId=ZSY7GT2NEDPN0 \
-              DomainName=${DOMAIN}
+#          sam package \
+#            --output-template-file packaged-template.yml \
+#            --s3-prefix "${{ steps.envs.outputs.stack-name }}/packages" \
+#            --s3-bucket "${DEPLOY_BUCKET}"
+#          sam deploy \
+#            --no-fail-on-empty-changeset \
+#            --s3-bucket "$DEPLOY_BUCKET" \
+#            --s3-prefix "${{ steps.envs.outputs.stack-name }}/deployments" \
+#            --template-file packaged-template.yml \
+#            --stack-name ${{ steps.envs.outputs.stack-name }} \
+#            --capabilities CAPABILITY_IAM \
+#            --parameter-overrides \
+#              Route53HostedZoneId=ZSY7GT2NEDPN0 \
+#              DomainName=${DOMAIN} \
+#              WildcardCertificateARN=${{ secrets.WILDCARD_CERTIFICATE_ARN }}
+        echo ${{ steps.envs.outputs.stack-name }}
         env:
-          STACK_NAME: ${{ format('rdok-{0}-{1}', env.INPUTS_ENVIRONMENT, env.NAME) }}
           DEPLOY_BUCKET: ${{ format('rdok-{0}-deployments-us-east-1', env.INPUTS_ENVIRONMENT) }}
-          DOMAIN: ${{ format('{0}-{1}.{2}', env.INPUTS_ENVIRONMENT, env.NAME, env.BASE_DOMAIN) }}
-      - name: Website Bucket Sync
-        run: |
-          docker run --rm -u "$(id -u)" -w "/app" -v "${PWD}:/app" \
-            node:13.8-alpine3.11 sh -c 'yarn && yarn compile'
-          BUCKET_NAME=$( \
-            aws cloudformation describe-stacks  \
-              --stack-name "$STACK_NAME" \
-              --query 'Stacks[0].Outputs[?OutputKey==`WebsiteBucket`].OutputValue' \
-              --output text \
-          )
-          aws s3 sync ./public s3://${BUCKET_NAME} --delete
-        env:
-          STACK_NAME: ${{ format('rdok-{0}-{1}', env.INPUTS_ENVIRONMENT, env.NAME) }}
-      - name: Cache Invalidation
-        run: |
-          DISTRIBUTION_ID=$( \
-            aws cloudformation describe-stacks  \
-            --stack-name "$STACK_NAME" \
-            --query 'Stacks[0].Outputs[?OutputKey==`DistributionID`].OutputValue' \
-            --output text \
-          )
-          aws cloudfront create-invalidation \
-            --distribution-id "$DISTRIBUTION_ID" \
-            --paths "/*"
-        env:
-          STACK_NAME: ${{ format('rdok-{0}-{1}', env.INPUTS_ENVIRONMENT, env.NAME) }}
+#      - name: Website Bucket Sync
+#        run: |
+#          docker run --rm -u "$(id -u)" -w "/app" -v "${PWD}:/app" \
+#            node:13.8-alpine3.11 sh -c 'yarn && yarn compile'
+#          BUCKET_NAME=$( \
+#            aws cloudformation describe-stacks  \
+#            --stack-name ${{ steps.envs.outputs.stack-name }} \
+#              --query 'Stacks[0].Outputs[?OutputKey==`WebsiteBucket`].OutputValue' \
+#              --output text \
+#          )
+#          aws s3 sync ./public s3://${BUCKET_NAME} --delete
+#      - name: Cache Invalidation
+#        run: |
+#          DISTRIBUTION_ID=$( \
+#            aws cloudformation describe-stacks  \
+#            --stack-name ${{ steps.envs.outputs.stack-name }} \
+#            --query 'Stacks[0].Outputs[?OutputKey==`DistributionID`].OutputValue' \
+#            --output text \
+#          )
+#
+#          aws cloudfront create-invalidation \
+#            --distribution-id "$DISTRIBUTION_ID" \
+#            --paths "/*"
