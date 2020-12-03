@@ -7,6 +7,7 @@ env:
   BASE_DOMAIN: rdok.co.uk
 on:
   push:
+    branches: [main]
   workflow_dispatch:
     inputs:
       environment:
@@ -24,10 +25,8 @@ jobs:
           SUBDOMAIN=testing-
           [ "$INPUTS_ENVIRONMENT" = "production" ] && ENVIRONMENT=production
           [ "$INPUTS_ENVIRONMENT" = "production" ] && SUBDOMAIN=""
-          STACK_NAME="rdok-${ENVIRONMENT}-${NAME}"
-          DOMAIN="${SUBDOMAIN}${NAME}.${BASE_DOMAIN}"
-          echo ::set-output name=stack-name::"${STACK_NAME}"
-          echo ::set-output name=domain::"${DOMAIN}"
+          echo ::set-output name=stack-name::"rdok-${ENVIRONMENT}-${NAME}"
+          echo ::set-output name=domain::"${SUBDOMAIN}${NAME}.${BASE_DOMAIN}"
           echo ::set-output name=deploy-bucket::"rdok-${ENVIRONMENT}-deployments-us-east-1"
       - name: CloudFormation Package & Deploy
         run: |
