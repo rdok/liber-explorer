@@ -28,7 +28,6 @@ jobs:
 #
 #          STACK_NAME: ${{ format('rdok-{0}-{1}', env.INPUTS_ENVIRONMENT, env.NAME) }}
 #          echo ::set-output name=stack-name::${STACK_NAME}
-
           STACK_NAME='stack-name'
           echo ::set-output name=stack-name::${STACK_NAME}
       - name: CloudFormation Package & Deploy
@@ -54,7 +53,7 @@ jobs:
 #      - name: Website Bucket Sync
 #        run: |
 #          docker run --rm -u "$(id -u)" -w "/app" -v "${PWD}:/app" \
-#            node:13.8-alpine3.11 sh -c 'yarn && yarn compile'
+#            node:15.3-alpine3.12 sh -c 'yarn && yarn compile'
 #          BUCKET_NAME=$( \
 #            aws cloudformation describe-stacks  \
 #            --stack-name ${{ steps.envs.outputs.stack-name }} \
