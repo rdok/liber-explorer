@@ -7,7 +7,7 @@ start: compile
 		--workdir "/app" \
 		--volume "${PWD}:/app" \
 		--publish 8080:8080 \
-		node:13.8-alpine3.11 yarn dev
+		node:15.3-alpine3.12 yarn dev
 
 compile: yarn
 	docker run \
@@ -18,7 +18,7 @@ compile: yarn
 		--workdir "/app" \
 		--volume "${PWD}:/app" \
 		--publish 8080:8080 \
-		node:13.8-alpine3.11 yarn compile
+		node:15.3-alpine3.12 yarn compile
 
 yarn:
 	docker run \
@@ -29,6 +29,5 @@ yarn:
 		--workdir "/app" \
 		--volume "${PWD}:/app" \
 		--publish 8080:8080 \
-		node:13.8-alpine3.11 yarn
-
+		node:15.3-alpine3.12 yarn
 
