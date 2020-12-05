@@ -12,6 +12,7 @@ on:
     inputs:
       environment:
         required: true
+        description: Used for ploduction release only.
         default: production
 jobs:
   package-deploy:
