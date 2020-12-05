@@ -1,8 +1,8 @@
 start: compile
-	make docker command="yarn dev"
+	make docker command='yarn dev'
 
 compile: yarn
-	make docker command="yarn compile"
+	make docker command='yarn compile'
 
 yarn:
 	make docker command=yarn
