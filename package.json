@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "live-server": "^1.2.1",
-    "node-sass": "^5.0.0"
+    "node-sass": "^7.0.0"
   },
   "license": "MIT"
 }
